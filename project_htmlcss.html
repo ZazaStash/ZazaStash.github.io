@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EcoTravel — устойчивые путешествия</title>
+  <meta name="description" content="Блог о экотуризме: советы, маршруты и подписка. Проект для итоговой пересдачи.">
+  <style>
+    /* ==================== CSS VARIABLES ==================== */
+    :root{
+      --main-color:#2b8a6b;
+      --accent-color:#f4a261;
+      --muted:#6b7180;
+      --bg:#f7fbf8;
+      --card:#ffffff;
+      --max-width:1100px;
+      --base-font:16px;
+    }
+
+    /* ================ BASIC RESET & BOX MODEL ================ */n
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; font-size:var(--base-font);background:var(--bg);color:#0f1720}
+
+    /* ==================== LAYOUT ==================== */
+    header{background:linear-gradient(90deg,var(--main-color), #25755f);color:white;position:sticky;top:0;z-index:1000}
+    .container{width:90%;max-width:var(--max-width);margin:0 auto}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0}
+    .brand{display:flex;align-items:center;gap:.65rem}
+    .logo{width:48px;height:48px;border-radius:8px;display:inline-grid;place-items:center;background:rgba(255,255,255,0.12);font-weight:700}
+    .site-title{font-size:1.125rem;font-weight:700}
+
+    /* ================ NAV LINKS (FLEX) ================= */
+    .menu{display:flex;gap:1rem;align-items:center}
+    .menu a{color:rgba(255,255,255,0.95);text-decoration:none;padding:0.35rem 0.6rem;border-radius:6px;transition:background .18s,transform .18s}
+    .menu a:hover, .menu a:focus{background:rgba(255,255,255,0.08);transform:translateY(-2px)}
+
+    /* ================ HERO (GRID) ================= */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center;padding:2.2rem 0}
+    .hero h1{margin:0 0 .5rem;font-size:2rem}
+    .hero p.lead{margin:0 0 1rem;color:var(--muted)}
+    .cta{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent-color);color:white;padding:.6rem 1rem;border-radius:10px;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(15,23,32,0.08);transition:transform .18s,box-shadow .18s}
+    .cta:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(15,23,32,0.12)}
+
+    /* ================= CARDS (GRID) ================= */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.25rem}
+    .card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 6px 20px rgba(12,17,20,0.04);overflow:hidden;position:relative}
+    .card h3{margin:.25rem 0}
+    .card p{color:var(--muted);margin:0}
+    .card::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;background:linear-gradient(180deg,rgba(42,138,107,0.08),transparent);transform:rotate(25deg);border-radius:50%}
+
+    /* ================ GRID: FEATURE SECTION ================= */
+    .features{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem;padding:2rem 0}
+    .feature-list ul{padding-left:1.1rem}
+
+    /* ================ FORM (styled) ================= */
+    form.subscribe{display:flex;gap:.6rem;align-items:center}
+    input[type="email"]{flex:1;padding:.7rem 1rem;border-radius:10px;border:1px solid #e4e7ec;outline:none;font-size:1rem}
+    input::placeholder{color:#9aa0a6}
+    input:focus{border-color:var(--main-color);box-shadow:0 6px 18px rgba(43,138,107,0.08)}
+    button[type="submit"]{background:var(--main-color);color:white;padding:.65rem 1rem;border-radius:10px;border:none;cursor:pointer}
+
+    /* ================ ARTICLE LIST (GRID + FLEXBOX) ================= */
+    .posts{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+    .post{display:flex;gap:1rem;padding:1rem;background:var(--card);border-radius:10px;align-items:flex-start}
+    .post img{width:150px;height:100px;object-fit:cover;border-radius:8px;flex-shrink:0}
+
+    /* ================ SIDEBAR (position sticky) ================= */
+    aside{position:relative}
+    .sticky{position:sticky;top:88px;padding:1rem;background:var(--card);border-radius:10px}
+
+    /* ================ FOOTER ================= */
+    footer{padding:2rem 0;color:var(--muted)}
+
+    /* ================= ANIMATIONS & PSEUDO SELECTORS ================= */
+    .brand .logo::before{content:"🌿";font-size:1.1rem}
+    .card h3::after{content:"→";margin-left:.5rem;opacity:0;transform:translateX(-6px);display:inline-block;transition:opacity .18s,transform .18s}
+    .card:hover h3::after{opacity:1;transform:translateX(0)}
+
+    /* nth-child usage */
+    .cards .card:nth-child(2){border:1px dashed rgba(42,138,107,0.08)}
+    .cards .card:nth-child(3)::before{content:"Popular";position:absolute;left:1rem;top:1rem;background:var(--accent-color);padding:.25rem .5rem;border-radius:6px;color:white;font-size:.8rem}
+
+    /* keyframes */
+    @keyframes floatUp{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .card{animation:floatUp .45s ease both}
+
+    /* ================= POSITIONING DEMO ================= */
+    .hero-image{position:relative}
+    .hero-badge{position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,0.95);padding:.4rem .6rem;border-radius:8px;font-weight:600}
+
+    /* ================ RESPONSIVE (MEDIA QUERIES) ================= */
+    /* Breakpoint 1 */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .features{grid-template-columns:1fr}
+      .posts{grid-template-columns:1fr}
+    }
+    /* Breakpoint 2 */
+    @media (max-width:560px){
+      .menu{display:none}
+      header{padding:0 0}
+      .cards{grid-template-columns:1fr}
+      .hero h1{font-size:1.6rem}
+      nav{padding:.6rem 0}
+      .brand .site-title{font-size:1rem}
+    }
+
+    /* small niceties */
+    a.inline-link{color:var(--main-color);text-decoration:underline}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="Главная навигация">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <div class="site-title">EcoTravel</div>
+            <div style="font-size:.8rem;color:rgba(255,255,255,0.85)">Устойчивые маршруты и советы</div>
+          </div>
+        </div>
+        <div class="menu" role="navigation">
+          <a href="#home">Главная</a>
+          <a href="#articles">Статьи</a>
+          <a href="#routes">Маршруты</a>
+          <a href="#subscribe">Подписка</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <section class="hero">
+      <div>
+        <h1>Путешествуй экологично — открой мир заново</h1>
+        <p class="lead">Советы по подготовке, подбор устойчивых маршрутов и вдохновляющие истории из путешествий по всему миру.</p>
+        <div style="display:flex;gap:.6rem;align-items:center">
+          <button class="cta" onclick="document.getElementById('subscribe').scrollIntoView({behavior:'smooth'})">Подписаться</button>
+          <a href="#articles" class="inline-link">Читать статьи</a>
+        </div>
+        <div class="cards" aria-hidden="false">
+          <article class="card">
+            <h3>Низко углеродные маршруты</h3>
+            <p>Как выбирать транспорт и маршруты с минимальным следом CO₂.</p>
+          </article>
+          <article class="card">
+            <h3>Эко‑снаряжение</h3>
+            <p>Обзор многоразовых и перерабатываемых решений в походах.</p>
+          </article>
+          <article class="card">
+            <h3>Локальные проекты</h3>
+            <p>Как поддержать сообщества и экопроекты во время поездок.</p>
+          </article>
+        </div>
+      </div>
+
+      <aside class="hero-image" aria-label="Изображение с описанием">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60" alt="Путешественник на фоне гор" style="width:100%;border-radius:12px;display:block">
+        <div class="hero-badge">Экспедиция: Европа</div>
+      </aside>
+    </section>
+
+    <section class="features">
+      <div class="feature-list">
+        <h2 id="articles">Последние статьи</h2>
+        <ul>
+          <li><strong>Как подготовиться к походу</strong> — планирование, упаковка и выбор маршрута.</li>
+          <li><strong>Этичный туризм</strong> — уважение к культуре и природе.</li>
+          <li><strong>Лучшие эко‑хостелы</strong> — где останавливаться, чтобы поддержать устойчивость.</li>
+        </ul>
+
+        <h3 style="margin-top:1rem">Популярные маршруты</h3>
+        <ol>
+          <li>Трансильвания: леса и заповедники</li>
+          <li>Островные треки Средиземноморья</li>
+          <li>Норвежские фьорды на поезде</li>
+        </ol>
+
+        <h3 id="subscribe" style="margin-top:1rem">Подпишитесь на рассылку</h3>
+        <form class="subscribe" onsubmit="return subscribe(event)">
+          <label for="email" class="visually-hidden">Email</label>
+          <input id="email" name="email" type="email" placeholder="Ваш email" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
+          <button type="submit">Подписаться</button>
+        </form>
+      </div>
+
+      <aside>
+        <div class="sticky">
+          <h4>О проекте</h4>
+          <p style="margin:.25rem 0 .5rem;color:var(--muted)">Коротко: практические советы по эко‑путешествиям и подбор устойчивых направлений.</p>
+          <nav aria-label="Внутренняя навигация">
+            <ul style="padding-left:1rem;margin:0">
+              <li><a href="#home">О нас</a></li>
+              <li><a href="#articles">Блог</a></li>
+              <li><a href="#routes">Маршруты</a></li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    </section>
+
+    <section>
+      <h2>Свежие посты</h2>
+      <div class="posts">
+        <article class="post">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60" alt="Лесной тропа">
+          <div>
+            <h3>Поход по Карпатам</h3>
+            <p class="meta" style="color:var(--muted);font-size:.9rem;margin-bottom:.5rem">24 ноября 2025 — 8 минут чтения</p>
+            <p>Маршрут для новичков, минимизация отходов и где искать безопасные лагеря.</p>
+            <p><a href="#" class="inline-link">Читать далее</a></p>
+          </div>
+        </article>
+
+        <article class="post">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=60" alt="Экологичное снаряжение">
+          <div>
+            <h3>Выбор палатки: на что смотреть</h3>
+            <p class="meta" style="color:var(--muted);font-size:.9rem;margin-bottom:.5rem">10 октября 2025 — 5 минут</p>
+            <p>Разбор материалов, вес и долговечность: как выбрать палатку, которая прослужит долго.</p>
+            <p><a href="#" class="inline-link">Читать далее</a></p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+        <p style="margin:0">© EcoTravel 2025 — Сделано с уважением к природе</p>
+        <p style="margin:0;color:var(--muted)">Разделы: <a href="#articles">Статьи</a> · <a href="#routes">Маршруты</a> · <a href="#subscribe">Подписка</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Простая валидация формы + визуальная подсказка
+    function subscribe(e){
+      e.preventDefault();
+      const email = document.getElementById('email');
+      if(!email.checkValidity()){
+        email.style.borderColor = 'crimson';
+        email.focus();
+        return false;
+      }
+      // имитация отправки: показываем сообщение и очищаем
+      alert('Спасибо! Вы подписаны на рассылку: ' + email.value);
+      email.value='';
+      return false;
+    }
+
+    // Accessibility helper: add :focus-visible like behaviour for mouse users
+    document.addEventListener('mousedown',()=>document.body.classList.add('using-mouse'));
+    document.addEventListener('keydown',()=>document.body.classList.remove('using-mouse'));
+  </script>
+</body>
+</html>

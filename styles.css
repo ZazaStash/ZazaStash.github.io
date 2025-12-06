@@ -1,0 +1,371 @@
+<link rel="stylesheet" href="styles.css">
+
+/* styles.css
+   Для: project_htmlcss.html (EcoTravel)
+   Автор: сгенерировано ChatGPT
+   Сохраните как styles.css и подключите в <head>
+*/
+
+/* ==================== ПЕРЕМЕННЫЕ ==================== */
+:root{
+  --main-color: #2b8a6b;       /* зелёный — бренд */
+  --main-600: #25755f;
+  --accent-color: #f4a261;     /* оранжевый акцент */
+  --muted: #6b7180;
+  --bg: #f7fbf8;
+  --card: #ffffff;
+  --max-width: 1100px;
+  --radius-lg: 12px;
+  --radius-md: 10px;
+  --shadow-1: 0 6px 20px rgba(12,17,20,0.04);
+  --shadow-2: 0 10px 28px rgba(15,23,32,0.08);
+  --glass: rgba(255,255,255,0.08);
+  --base-font: 16px;
+}
+
+/* ==================== RESET / БАЗА ==================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--base-font);
+  background: var(--bg);
+  color: #0f1720;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+}
+
+/* улучшаем вид при печати */
+@media print {
+  :root { color-scheme: light; }
+  header, .cta, .menu, .sticky { display: none !important; }
+  body { background: #fff; color: #000; }
+}
+
+/* ==================== КОНТЕЙНЕР ==================== */
+.container {
+  width: 92%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* ==================== HEADER / NAV ==================== */
+header {
+  background: linear-gradient(90deg, var(--main-color), var(--main-600));
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 8px rgba(15,23,32,0.06);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 0;
+}
+
+/* бренд */
+.brand { display: flex; align-items: center; gap: .65rem; }
+.logo {
+  width: 48px; height: 48px; border-radius: 8px;
+  display: inline-grid; place-items: center;
+  background: rgba(255,255,255,0.12);
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.brand .logo::before { content: "🌿"; font-size: 1.1rem; }
+
+/* заголовок сайта */
+.site-title { font-size: 1.125rem; font-weight: 700; line-height: 1; }
+.brand small { color: rgba(255,255,255,0.9); font-size: .82rem; display:block; }
+
+/* меню навигации */
+.menu {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.menu a {
+  color: rgba(255,255,255,0.95);
+  text-decoration: none;
+  padding: .35rem .6rem;
+  border-radius: 6px;
+  transition: background .18s, transform .18s;
+  font-weight: 600;
+  font-size: .95rem;
+}
+.menu a:hover,
+.menu a:focus {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+/* ==================== HERO ==================== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.2rem 0;
+}
+
+.hero h1 {
+  margin: 0 0 .5rem;
+  font-size: 2rem;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero p.lead {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+/* CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  background: var(--accent-color);
+  color: white;
+  padding: .6rem 1rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(15,23,32,0.08);
+  transition: transform .18s, box-shadow .18s;
+  font-weight: 700;
+}
+.cta:hover,
+.cta:focus { transform: translateY(-3px); box-shadow: var(--shadow-2); outline: none; }
+
+/* inline links inside text */
+a.inline-link { color: var(--main-color); text-decoration: underline; font-weight: 600; }
+
+/* hero image */
+.hero-image img { width: 100%; border-radius: var(--radius-lg); display:block; }
+.hero-badge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: rgba(255,255,255,0.95);
+  padding: .4rem .6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+/* ==================== CARDS ==================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.card {
+  background: var(--card);
+  padding: 1rem;
+
+border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  position: relative;
+  transition: transform .22s, box-shadow .22s;
+  animation: floatUp .45s ease both;
+}
+.card:hover { transform: translateY(-6px); box-shadow: var(--shadow-2); }
+.card h3 { margin: .25rem 0; font-size: 1.05rem; }
+.card p { color: var(--muted); margin: 0; font-size: .95rem; }
+
+/* декоративный акцент на карточке */
+.card::after{
+  content: "";
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 120px; height: 120px;
+  background: linear-gradient(180deg, rgba(42,138,107,0.08), transparent);
+  transform: rotate(25deg);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* дополнительные стили для nth-child */
+.cards .card:nth-child(2){ border: 1px dashed rgba(42,138,107,0.08); }
+.cards .card:nth-child(3)::before{
+  content: "Popular";
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: var(--accent-color);
+  padding: .25rem .5rem;
+  border-radius: 6px;
+  color: white;
+  font-size: .8rem;
+}
+
+/* анимация появления */
+@keyframes floatUp{
+  from{ transform: translateY(8px); opacity: 0; }
+  to  { transform: translateY(0); opacity: 1; }
+}
+
+/* ==================== FEATURES / SIDEBAR ==================== */
+.features {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.2rem;
+  padding: 2rem 0;
+}
+
+.feature-list h2, .feature-list h3 { margin: 0 0 .6rem; }
+.feature-list ul, .feature-list ol {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  padding-left: 1.05rem;
+}
+
+/* подписка (форма) */
+form.subscribe {
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  margin-top: .6rem;
+}
+input[type="email"]{
+  flex: 1;
+  padding: .7rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid #e4e7ec;
+  outline: none;
+  font-size: 1rem;
+}
+input[type="email"]::placeholder { color: #9aa0a6; }
+input[type="email"]:focus { border-color: var(--main-color); box-shadow: 0 6px 18px rgba(43,138,107,0.08); }
+
+button[type="submit"]{
+  background: var(--main-color);
+  color: white;
+  padding: .65rem 1rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+button[type="submit"]:hover,
+button[type="submit"]:focus { transform: translateY(-2px); box-shadow: var(--shadow-1); outline: none; }
+
+/* ==================== POSTS ==================== */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.post {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 10px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-1);
+}
+.post img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.post h3 { margin: 0 0 .35rem; }
+.post .meta { color: var(--muted); font-size: .9rem; margin-bottom: .5rem; }
+
+/* ==================== SIDEBAR STICKY ==================== */
+aside { position: relative; }
+.sticky {
+  position: sticky;
+  top: 88px;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-1);
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+  padding: 2rem 0;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
+/* ==================== ACCESSIBILITY / SMALL HELPERS ==================== */
+/* visually-hidden (для меток формы) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0; padding: 0; margin: -1px;
+}
+
+/* Поведение фокуса — показать чёткий контраст при keyboard navigation */
+:focus { outline: 3px solid rgba(43,138,107,0.18); outline-offset: 3px; }
+body.using-mouse :focus { outline: none; } /* если указано использование мыши (JS в HTML) */
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .
+
+features { grid-template-columns: 1fr; }
+  .posts { grid-template-columns: 1fr; }
+  .hero-image { order: -1; } /* изображение вверх на узких экранах */
+}
+
+@media (max-width: 560px) {
+  .menu { display: none; }   /* можно заменить на бургер-меню при желании */
+  header { padding: 0; }
+  nav { padding: .6rem 0; }
+  .cards { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.6rem; }
+  .brand .site-title { font-size: 1rem; }
+  .hero-badge { right: 10px; bottom: 10px; font-size: .85rem; }
+  .post img { width: 120px; height: 84px; }
+}
+
+/* ==================== Мелкие улучшения визуала ==================== */
+.card h3::after {
+  content: "→";
+  margin-left: .5rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  display: inline-block;
+  transition: opacity .18s, transform .18s;
+}
+.card:hover h3::after { opacity: 1; transform: translateX(0); }
+
+/* адаптивный контейнер для картинок, если нужно */
+.responsive-img { max-width: 100%; height: auto; display: block; }
+
+/* предотвращаем слишком длинные слова ломать лэйаут */
+* { word-break: break-word; }
